@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>Login</title>
+	<link rel="stylesheet" href="stylesheet.css">
+
+	<style>
+		.section {
+			height: 856px;
+			display: grid;
+			grid-template-rows: 20% 80%;
+		}
+
+		.section-item-1 {
+			width: 100%;
+			height: 100%;
+			display: grid;
+			justify-items: center;
+			align-content: center;
+			font-size: 35px;
+			font-weight: bolder;
+		}
+
+		form {
+			background-color: #efdff0;
+			padding: 20px;
+			border-radius: 8px;
+			box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+			width: 500px;
+			height: 440px;
+			border: none;
+            border-radius: 50px;
+		}
+
+		input[type="text"],
+		input[type="email"],
+		input[type="password"] {
+			width: 100%;
+			padding: 10px;
+			margin: 8px 0;
+			border: 1px solid #ccc;
+			border-radius: 4px;
+			box-sizing: border-box;
+			border: none;
+            border-radius: 50px;
+		}
+
+		#Submit {
+			background-color: #be7de9;
+			color: white;
+			padding: 12px 20px;
+			border: none;
+			border-radius: 4px;
+			cursor: pointer;
+			width: 100%;
+			border: none;
+            border-radius: 50px;
+		}
+
+		input[type="submit"]:hover {
+			background-color: #45a049;
+		}
+	</style>
+</head>
+
+<body>
+	<section class="section" id="section">
+
+		<div class="section-item-1">
+			Login
+		</div>
+
+
+		<div style="display: grid; justify-content: center;">
+
+			<form id="contactForm" style="height: 200px;">
+				<label>Email</label>
+				<input type="email" id="Email" placeholder="Your email.." required>
+
+				<label>Password</label>
+				<input type="password" id="Password" placeholder="Your password.." required>
+
+				<button type="submit" id="Submit" value="Register"> Register </button>
+
+			</form>
+
+		</div>
+
+	</section>
+
+</body>
+
+<script type="module">
+
+	import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+	import { getDatabase, set, ref, child } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
+	import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+
+	const firebaseConfig = {
+		apiKey: "AIzaSyBwXy07lHdFG8YRvQSLla6zKcYtiIYoc2Q",
+		authDomain: "white-board-91038.firebaseapp.com",
+		projectId: "white-board-91038",
+		storageBucket: "white-board-91038.appspot.com",
+		messagingSenderId: "524781776587",
+		appId: "1:524781776587:web:f2f8c843d0c8886483754e"
+	};
+
+	// Initialize Firebase
+	const app = initializeApp(firebaseConfig);
+	const db = getDatabase();
+	const auth = getAuth(app);
+	const dbref = ref(db);
+
+	let Email = document.getElementById("Email");
+	let Password = document.getElementById('Password');
+	let ContactForm = document.getElementById("contactForm");
+
+	let LoginUser = evt => {
+		evt.preventDefault();
+
+		signInWithEmailAndPassword(auth, Email.value, Password.value)
+			.then((credantials) => {
+				window.location.href = "Index.html";
+			})
+			.catch((error) => {
+				alert(error.message);
+				console.log(error.code);
+				console.log(error.message);
+			})
+	}
+
+	ContactForm.addEventListener('submit', LoginUser);
+
+
+</script>
+
+</html>
